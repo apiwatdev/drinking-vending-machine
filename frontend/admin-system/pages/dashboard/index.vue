@@ -1,6 +1,39 @@
 <template>
   <div class="container">
-    
+    <div class="graph-chart">
+      <bar-chart
+        :data="barChartData"
+        :options="barChartOptions"
+        :height="200"
+      />
+    </div>
+    <div class="machine-health">
+      <p class="title">Machines Health</p>
+      <div class="machine-card" @click="goToMachineDetail()">
+        <h2 class="machine-name">machine001</h2>
+        <p class="machine-lo">Bang Bon, Bangkok</p>
+        <p class="machine-updatedate">13/04/2021</p>
+        <span class="alert warning">nearly out of item</span>
+      </div>
+      <div class="machine-card">
+        <h2 class="machine-name">machine001</h2>
+        <p class="machine-lo">Bang Bon, Bangkok</p>
+        <p class="machine-updatedate">13/04/2021</p>
+        <span class="alert denger">out of stock</span>
+      </div>
+      <div class="machine-card">
+        <h2 class="machine-name">machine001</h2>
+        <p class="machine-lo">Bang Bon, Bangkok</p>
+        <p class="machine-updatedate">13/04/2021</p>
+        <span class="alert health">healthy</span>
+      </div>
+      <div class="machine-card">
+        <h2 class="machine-name">machine001</h2>
+        <p class="machine-lo">Bang Bon, Bangkok</p>
+        <p class="machine-updatedate">13/04/2021</p>
+        <span class="alert warning">nearly out of item</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,9 +113,6 @@ export default {
         }
       }
     };
-  },
-  created(){
- this.$router.push('/dashboard')
   },
   methods: {
     goToMachineDetail(){
