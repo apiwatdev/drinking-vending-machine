@@ -27,9 +27,50 @@ export class MachineProductsController {
     return this.machineProductsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.machineProductsService.findOne(+id);
+  @Get(':machineId')
+  findAllProductByMachineId(@Param('machineId') machineId) {
+    return this.machineProductsService.findAllProductByMachineId(machineId);
+  }
+
+  @Post(':machineId')
+  addProduct(@Param('machineId') machineId, @Body() body) {
+    return this.machineProductsService.addProduct(machineId, body);
+  }
+
+  @Get(':machineId/:productId')
+  findProduct(@Param('machineId') machineId, @Param('productId') productId) {
+    return this.machineProductsService.findProduct(machineId, productId);
+  }
+
+  @Patch(':machineId/:productId')
+  updateProduct(
+    @Param('machineId') machineId,
+    @Param('productId') productId,
+    @Param('event') event,
+    @Body()
+    body: any,
+  ) {
+    return this.machineProductsService.updateProduct(
+      machineId,
+      productId,
+      body,
+    );
+  }
+
+  @Patch(':machineId/:productId/stock/:event')
+  updateStock(
+    @Param('machineId') machineId,
+    @Param('productId') productId,
+    @Param('event') event,
+    @Body()
+    body: any,
+  ) {
+    return this.machineProductsService.updateStock(
+      machineId,
+      productId,
+      event,
+      body,
+    );
   }
 
   @Patch(':id')

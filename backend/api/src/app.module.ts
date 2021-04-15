@@ -11,21 +11,26 @@ import { MachinesModule } from './machines/machines.module';
 import { UsersModule } from './users/users.module';
 import { MachineProductsService } from './machine-products/machine-products.service';
 import { FilesController } from './files/files.controller';
+import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MachineProductsModule, UsersModule, MachinesModule],
+  imports: [MachineProductsModule, UsersModule, MachinesModule, AuthModule],
   controllers: [
     AppController,
     UsersController,
     MachineProductsController,
     MachinesController,
     FilesController,
+    AuthController,
   ],
   providers: [
     AppService,
     MachinesService,
     UsersService,
     MachineProductsService,
+    AuthService,
   ],
 })
 export class AppModule {}
