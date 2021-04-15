@@ -3,11 +3,89 @@
     "machineId": "machine001",
     "products": [
       {
+        "id": "coca001",
         "name": "Coca-Cola",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
-        "price": 0,
+        "price": 15,
         "stock": 11,
-        "images": "./asasdas/asdsa.png"
+        "image": "http://localhost:3001/files/cocacola-01.png"
+      },
+      {
+        "id": "coca003",
+        "name": "Coca-Cola",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 15,
+        "stock": 11,
+        "image": "http://localhost:3001/files/cocacola-02.png"
+      },
+      {
+        "id": "sprite-01",
+        "name": "Sprite",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 15,
+        "stock": 11,
+        "image": "http://localhost:3001/files/sprite-01.png"
+      },
+      {
+        "id": "pepsi001",
+        "name": "Pepsi",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 20,
+        "stock": 11,
+        "image": "http://localhost:3001/files/pepsi-01.png"
+      },
+      {
+        "id": "ayataka",
+        "name": "AYATAKA",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 20,
+        "stock": 11,
+        "image": "http://localhost:3001/files/ayataka-01.png"
+      }
+    ]
+  },
+  {
+    "machineId": "machine002",
+    "products": [
+      {
+        "id": "coca001",
+        "name": "Coca-Cola",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 15,
+        "stock": 11,
+        "image": "http://localhost:3001/files/cocacola-01.png"
+      },
+      {
+        "id": "coca003",
+        "name": "Coca-Cola",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 15,
+        "stock": 11,
+        "image": "http://localhost:3001/files/cocacola-02.png"
+      },
+      {
+        "id": "sprite-01",
+        "name": "Sprite",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 15,
+        "stock": 11,
+        "image": "http://localhost:3001/files/sprite-01.png"
+      },
+      {
+        "id": "pepsi001",
+        "name": "Pepsi",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 20,
+        "stock": 11,
+        "image": "http://localhost:3001/files/pepsi-01.png"
+      },
+      {
+        "id": "ayataka",
+        "name": "AYATAKA",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 20,
+        "stock": 11,
+        "image": "http://localhost:3001/files/ayataka-01.png"
       }
     ]
   }

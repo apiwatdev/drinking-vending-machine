@@ -31,7 +31,7 @@ export class MachineProductsService {
       return v.machineId == id;
     });
 
-    return machineProducts;
+    return machineProducts.products || [];
   }
 
   findProduct(machineId: string, productId: string) {

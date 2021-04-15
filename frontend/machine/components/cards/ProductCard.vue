@@ -42,7 +42,7 @@ export default {
     height: 12rem;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 15rem;
+    background-size: 9rem;
   }
   .price {
     text-align: center;

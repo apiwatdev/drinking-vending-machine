@@ -11,29 +11,41 @@
     </div>
     <div>
       <div class="drink-detail">
-        <h2>Coca-cola</h2>
+        <h2>{{ product.name }}</h2>
+        <h3>{{ product.price }} ฿</h3>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          quae facilis nostrum soluta repudiandae fugit reiciendis et doloribus
-          eos, aliquid tempora adipisci natus at. Ab tenetur ipsam atque numquam
-          voluptatem.
+          {{ product.description }}
         </p>
       </div>
       <div class="quantity">
         <div class="minus">
-          <img src="~assets/icons/minus.svg" alt="" />
+          <img
+            @click="updateQty('minus', -1)"
+            src="~assets/icons/minus.svg"
+            alt=""
+          />
         </div>
         <div class="qty">
-          <h4>4</h4>
+          <input
+            type="number"
+            v-model="qty"
+            min="0"
+            :max="product.stock"
+            @change="updateQty('set', $event.target.value)"
+          />
         </div>
         <div class="plus">
-          <img src="~assets/icons/plus.svg" alt="" />
+          <img
+            @click="updateQty('plus', 1)"
+            src="~assets/icons/plus.svg"
+            alt=""
+          />
         </div>
-        <div class="avaliable">
-          23 Avaliable
-        </div>
+        <div class="avaliable">{{ product.stock }} Avaliable</div>
       </div>
-      <div class="total">Total <span>12 ฿</span></div>
+      <div class="total">
+        Total <span>{{ total }} ฿</span>
+      </div>
       <div class="paynow">
         <button @click="paynow()" class="paynow-btn">Pay now</button>
       </div>
@@ -47,11 +59,13 @@ export default {
   layout: "machine",
   data() {
     return {
-      image: cokeImage
+      image: cokeImage,
+      qty: 1
     };
   },
   fetch() {
-    const { machine, product } = this.$route.params;
+    const machine = this.$route.params.machine;
+    const product = this.$route.params.product;
     this.$store.dispatch("fetchProduct", {
       machineId: machine,
       productId: product
@@ -59,15 +73,71 @@ export default {
   },
   computed: {
     product() {
-      return this.$store.state.product;
+      return this.$store.state.product || {};
+    },
+    order() {
+      return this.$store.state.order || {};
+    },
+    total() {
+      const price = this.$store.state.product
+        ? this.$store.state.product.price
+        : 0;
+      return price * this.qty;
+    }
+  },
+  mounted() {
+    if (!this.$store.state.product) {
+      const machine = this.$route.params.machine;
+      const product = this.$route.params.product;
+      this.$store.dispatch("fetchProduct", {
+        machineId: machine,
+        productId: product
+      });
     }
   },
   methods: {
     paynow() {
-      this.$router.push("/aaaa/order");
+      const machine = this.$route.params.machine;
+      const product = this.$route.params.product;
+      this.$store.commit("setOrder", {
+        machineId: machine,
+        productId: product,
+        qty: this.qty,
+        total: this.total
+      });
+
+       this.$axios
+        .post(`/api/machine-products/${machine}/${product}/stock/decrease`, {
+          num: this.qty
+        })
+        .then(res => {
+          this.$router.push("/" + machine + "/order");
+        });
     },
     goBack() {
       this.$router.go(-1);
+    },
+    updateQty(type, num) {
+      let update = 0;
+      switch (type) {
+        case "minus":
+          this.qty += num;
+          break;
+        case "plus":
+          this.qty += num;
+          break;
+        case "set": {
+          this.qty = Number(num);
+        }
+      }
+      if (this.qty >= this.product.stock) {
+        this.qty = this.product.stock;
+      } else if (this.qty < 1) {
+        this.qty = 1;
+      }
+
+      this.$store.commit("setOrderQty", this.qty);
+      this.$store.commit("setOrderTotal", this.total);
     }
   }
 };
@@ -94,7 +164,7 @@ export default {
     height: 25rem;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 25rem;
+    background-size: 15rem;
   }
 }
 
@@ -105,14 +175,30 @@ export default {
 
   .minus {
     margin: 0 0.5rem;
+    cursor: pointer;
   }
 
   .qty {
     margin: 0 0.5rem;
+    input {
+      border: none;
+      width: 2.5rem;
+      text-align: center;
+      font-size: 20px;
+      padding: 0.25rem;
+      font-weight: 600;
+      outline: none;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   .plus {
     margin: 0 0.5rem;
+    cursor: pointer;
   }
 
   .avaliable {

@@ -1,7 +1,13 @@
 export const state = () => ({
   productlist: [],
-  product: {},
-  machineId: ""
+  product: null,
+  machineId: "",
+  order: {
+    machineId: null,
+    productId: null,
+    qty: 0,
+    total: 0
+  }
 });
 
 export const mutations = {
@@ -13,6 +19,16 @@ export const mutations = {
   },
   setProduct(state, payload) {
     state.product = payload;
+  },
+  setOrderQty(state, payload) {
+    console.log(payload);
+    state.order.qty = payload;
+  },
+  setOrderTotal(state, payload) {
+    state.order.total = payload;
+  },
+  setOrder(state, payload) {
+    state.order = payload;
   }
 };
 
@@ -31,5 +47,14 @@ export const actions = {
       .then(res => {
         commit("setProduct", res.data);
       });
+  },
+  setOrder({ commit }, { order }) {
+    commit("setOrder", order);
+  },
+  setOrderQty({ commit }, { qty }) {
+    commit("setOrderQty", qty);
+  },
+  setOrderTotal({ commit }, { total }) {
+    commit("setOrderTotal", total);
   }
 };
