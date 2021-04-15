@@ -1,0 +1,14 @@
+[
+  {
+    "machineId": "machine001",
+    "products": [
+      {
+        "name": "Coca-Cola",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+        "price": 0,
+        "stock": 11,
+        "images": "./asasdas/asdsa.png"
+      }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "machine001",
+    "name": "machine001",
+    "location": "Bang Sue, Bangkok",
+    "map-location": "1213213213123213213"
+  },
+
+  {
+    "id": "machine002",
+    "name": "machine002",
+    "location": "Bang Na, Bangkok",
+    "map-location": "1213213213123213213"
+  },
+  {
+    "id": "machine003",
+    "name": "machine003",
+    "location": "Bang Bon, Bangkok",
+    "map-location": "1213213213123213213"
+  }
+]
