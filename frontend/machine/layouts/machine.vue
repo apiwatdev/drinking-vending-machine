@@ -1,36 +1,20 @@
 <template>
   <div class="container">
-    <header>
-      <h1 class="logo" @click="()=>{$router.push('/aaa')}"><span>O</span>Drink</h1>
-      <div class="machine-name">
-        machine001
-      </div>
-    </header>
+    <Header />
     <Nuxt />
   </div>
 </template>
-
+<script>
+import Header from "@/components/naviagetion/Header.vue";
+export default {
+  components: {
+    Header
+  }
+};
+</script>
 <style lang="scss" scoped>
 .container {
   padding: 0.5rem;
-  header {
-    display: flex;
-    justify-content: space-between;
-    .logo {
-      cursor: pointer;
-      display: block;
-      span {
-        color: $primary-color;
-      }
-      h1 {
-        font-size: 24px;
-      }
-    }
-
-    .machine-name {
-      display: block;
-    }
-  }
 }
 html {
   font-family: "Prompt", Arial, sans-serif;

@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="back">
-      <img src="~assets/icons/arrow-left-short.svg" alt="" />
+      <img @click="goBack()" src="~assets/icons/arrow-left-short.svg" alt="" />
     </div>
     <div class="drink-product">
       <div
         class="drink-image"
-        :style="{ backgroundImage: `url(${image})` }"
+        :style="{ backgroundImage: `url(${product.image})` }"
       ></div>
     </div>
     <div>
@@ -50,10 +50,25 @@ export default {
       image: cokeImage
     };
   },
-  methods :{
-      paynow(){
-         this.$router.push('/aaaa/order')   
-      }
+  fetch() {
+    const { machine, product } = this.$route.params;
+    this.$store.dispatch("fetchProduct", {
+      machineId: machine,
+      productId: product
+    });
+  },
+  computed: {
+    product() {
+      return this.$store.state.product;
+    }
+  },
+  methods: {
+    paynow() {
+      this.$router.push("/aaaa/order");
+    },
+    goBack() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>
@@ -115,17 +130,23 @@ export default {
 }
 
 .paynow-btn {
-    width: 100%;
+  width: 100%;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  background-color: #fec987;
+  font-family: "Prompt", Arial, sans-serif;
+  font-size: 20px;
+  box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
+  margin: 1rem auto;
+  padding: 0.8rem 0;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.back {
+  img {
     cursor: pointer;
-    color: #fff;
-    border:none;
-    background-color:#fec987;
-     font-family: "Prompt", Arial, sans-serif;
-    font-size: 20px;
-     box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
-     margin: 1rem auto;
-     padding: .8rem 0;
-     border-radius: 5px;
-     font-weight: 700;
+  }
 }
 </style>

@@ -33,7 +33,7 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/style-resources"],
+  modules: ["@nuxtjs/style-resources", "@nuxtjs/axios"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
@@ -44,5 +44,25 @@ export default {
 
   styleResources: {
     scss: ["~assets/scss/_colors.scss"]
+  },
+
+  axios: {
+    proxy: true
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL
+    }
+  },
+
+  proxy: {
+    "/api/": { target: "http://localhost:3001", pathRewrite: {'^/api/': ''} }
   }
 };
