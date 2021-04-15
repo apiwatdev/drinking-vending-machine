@@ -107,7 +107,7 @@ export default {
       });
 
        this.$axios
-        .post(`/api/machine-products/${machine}/${product}/stock/decrease`, {
+        .patch(`/api/machine-products/${machine}/${product}/stock/decrease`, {
           num: this.qty
         })
         .then(res => {
@@ -155,7 +155,6 @@ export default {
   height: 24rem;
   margin: 0.5rem auto;
   border-radius: 5%;
-  cursor: pointer;
   background-image: linear-gradient(180deg, $primary-color, #fec987);
   box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
 

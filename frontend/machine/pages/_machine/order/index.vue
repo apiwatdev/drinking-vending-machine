@@ -1,31 +1,28 @@
 <template>
   <div class="container">
-     
     <div class="thank-you">
-      
       Thank you!
-   
-
     </div>
     <div class="drink-product">
       <div
         class="drink-image"
-        :style="{ backgroundImage: `url(${image})` }"
+        :style="{ backgroundImage: `url(${product.image})` }"
       ></div>
     </div>
     <div>
       <div class="drink-detail">
-        <h2>Coca-cola</h2>
+        <h2>{{ product.name }}</h2>
+        <h3>{{ product.price }} ฿</h3>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          quae facilis nostrum soluta repudiandae fugit reiciendis et doloribus
-          eos, aliquid tempora adipisci natus at. Ab tenetur ipsam atque numquam
-          voluptatem.
+          {{ product.description }}
         </p>
       </div>
-      <div class="price">Price <span>12 ฿</span></div>
-      <div class="quantity">Quantity <span>12</span></div>
-      <div class="total">Total <span>12 ฿</span></div>
+      <div class="quantity">
+        Quantity <span>{{ order.qty }}</span>
+      </div>
+      <div class="total">
+        Total <span>{{ order.total }} ฿</span>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +35,19 @@ export default {
     return {
       image: cokeImage
     };
+  },
+  computed: {
+    product() {
+      return this.$store.state.product || {};
+    },
+    order() {
+      return this.$store.state.order || {};
+    }
+  },
+  mounted() {
+    if (!this.$store.state.product) {
+      this.$router.push("/");
+    }
   }
 };
 </script>
@@ -54,7 +64,6 @@ export default {
   height: 24rem;
   margin: 0.5rem auto;
   border-radius: 5%;
-  cursor: pointer;
   background-image: linear-gradient(180deg, $primary-color, #fec987);
   box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
 
@@ -63,34 +72,14 @@ export default {
     height: 25rem;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 25rem;
+    background-size: 15rem;
   }
 }
 
+
+.price,
+.total,
 .quantity {
-  display: flex;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  .minus {
-    margin: 0 0.5rem;
-  }
-
-  .qty {
-    margin: 0 0.5rem;
-  }
-
-  .plus {
-    margin: 0 0.5rem;
-  }
-
-  .avaliable {
-    font-size: 14px;
-    padding-top: 0.25rem;
-  }
-}
-
-.price, .total, .quantity  {
   margin-top: 1rem;
 }
 

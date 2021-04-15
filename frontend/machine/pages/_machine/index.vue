@@ -39,8 +39,10 @@ export default {
     // console.log(this.$store.state);
   },
   methods: {
-    toToProduct(machineId, productId) {
-      this.$router.push(`/${machineId}/${productId}`);
+    toToProduct(machineId, productId, isStock) {
+      if (isStock) {
+        this.$router.push(`/${machineId}/${productId}`);
+      }
     }
   }
 };
