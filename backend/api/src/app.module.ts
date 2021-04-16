@@ -14,9 +14,44 @@ import { FilesController } from './files/files.controller';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MachineProductsModule, UsersModule, MachinesModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.localhost'],
+    }),
+    MachineProductsModule,
+    UsersModule,
+    MachinesModule,
+    AuthModule,
+    MailerModule.forRootAsync({
+      useFactory: () => ({
+        transport: {
+          host: 'smtp.gmail.com',
+          port: 465,
+          auth: {
+            user: process.env.SMTP_GMAIL_USER,
+            pass: process.env.SMTP_GMAIL_PASS, // naturally, replace both with your real credentials or an application-specific password
+          },
+        },
+        defaults: {
+          from:
+            '"Drinking Vending Machine" <NotReply@drinkingVendingMachine.com>',
+        },
+        template: {
+          dir: __dirname + '/templates',
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
+      }),
+    }),
+  ],
   controllers: [
     AppController,
     UsersController,

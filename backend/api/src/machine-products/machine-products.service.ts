@@ -3,8 +3,10 @@ import { CreateMachineProductDto } from './dto/create-machine-product.dto';
 import { UpdateMachineProductDto } from './dto/update-machine-product.dto';
 import { MachineProductsData } from '../../../data/data.js';
 import { v4 as uuidv4 } from 'uuid';
+import { MailerService } from '@nestjs-modules/mailer';
 @Injectable()
 export class MachineProductsService {
+  constructor(private readonly mailerService: MailerService) {}
   machineProductList = MachineProductsData;
   create(createMachineProductDto: CreateMachineProductDto) {
     return 'This action adds a new machineProduct';
@@ -34,7 +36,7 @@ export class MachineProductsService {
     return machineProducts.products || [];
   }
 
-  findProduct(machineId: string, productId: string) {
+  async findProduct(machineId: string, productId: string) {
     const machineProducts = this.machineProductList.find((v) => {
       return v.machineId == machineId;
     });
@@ -57,9 +59,14 @@ export class MachineProductsService {
 
     switch (event) {
       case 'add':
-        product.stock = product.stock += body.num;
+        product.stock = product.stock + body.num;
       case 'decrease':
-        product.stock = product.stock -= body.num;
+        if (
+          this.checkNearlyOutOfItem(product.stock, product.stock - body.num)
+        ) {
+          this.sendNotiToNearlyOutOfItem(machineId, product);
+        }
+        product.stock = product.stock - body.num;
     }
     return product;
   }
@@ -88,5 +95,33 @@ export class MachineProductsService {
     machineProducts.products.push({ id: uuidv4(), ...body });
 
     return machineProducts;
+  }
+
+  sendNotiToNearlyOutOfItem(machineId, product) {
+    this.mailerService
+      .sendMail({
+        from: 'NotReply@drinkingVendingMachine.com', // sender
+        to: 'it.apiwat.dev@gmail.com', // list of receivers
+        subject: 'Machine Alert : Nearly Out Of Items', // Mail subject
+        html: `<b>Machine: ${machineId}</b><br>drink: ${product.name}<br>stock: ${product.stock}`, // HTML body
+      })
+      .then((res) => {
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  checkNearlyOutOfItem(oldStock: number, newStock: number) {
+    if (oldStock <= 10) {
+      return false;
+    }
+
+    if (newStock <= 10) {
+      return true;
+    }
+
+    return false;
   }
 }
