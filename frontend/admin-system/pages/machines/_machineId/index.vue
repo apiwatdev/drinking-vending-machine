@@ -1,13 +1,27 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="machine-name"><h2>machine 001</h2></div>
+      <div class="machine-name">
+        <h2>{{ machine.name }}</h2>
+      </div>
       <div class="machine-location">
         <span>location </span>
-        Bang Bon Bangkok
+        {{ machine.location }}
       </div>
       <div class="map">
-        map
+        <GmapMap
+          v-if="machine['map-location']"
+          :center="machine['map-location']"
+          :zoom="15"
+          map-type-id="terrain"
+          style="width: 100%; height: 100%"
+        >
+          <GmapMarker
+            :position="machine['map-location']"
+            :clickable="true"
+            :draggable="false"
+          />
+        </GmapMap>
       </div>
       <div class="product">
         <div class="product-title">Products</div>
@@ -156,8 +170,24 @@ export default {
   components: {},
   data() {
     return {
-      image: cokeImage
+      image: cokeImage,
+      markers: [{ lat: -25.344, lng: 131.036 }]
     };
+  },
+  fetch() {
+    const machineId = this.$route.params.machineId;
+    this.$store.dispatch("fetchMachine", { machineId });
+  },
+  computed: {
+    machine() {
+      return this.$store.state.machine;
+    }
+  },
+  mounted() {
+    if (!this.machine) {
+      const machineId = this.$route.params.machineId;
+      this.$store.dispatch("fetchMachine", { machineId });
+    }
   },
   methods: {
     goToMachineDetail() {
@@ -254,7 +284,7 @@ export default {
   }
   .map {
     border: 1px solid #ddd;
-    height: 8rem;
+    height: 20rem;
     border-radius: 10px;
     margin: 0.25rem;
   }

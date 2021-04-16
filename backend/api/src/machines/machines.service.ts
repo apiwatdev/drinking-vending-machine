@@ -7,4 +7,7 @@ export class MachinesService {
   findAll() {
     return this.machines;
   }
+  findOne(machineId) {
+    return this.machines.find((machine) => machine.id === machineId);
+  }
 }

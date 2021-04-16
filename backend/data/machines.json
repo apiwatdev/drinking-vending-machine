@@ -3,19 +3,19 @@
     "id": "machine001",
     "name": "machine001",
     "location": "Bang Sue, Bangkok",
-    "map-location": "1213213213123213213"
+    "map-location":{ "lat": 13.789849, "lng": 100.573952 }
   },
 
   {
     "id": "machine002",
     "name": "machine002",
-    "location": "Bang Na, Bangkok",
-    "map-location": "1213213213123213213"
+    "location": "Jatujak, Bangkok",
+    "map-location": { "lat": 13.8005759, "lng": 100.5595059 }
   },
   {
     "id": "machine003",
     "name": "machine003",
-    "location": "Bang Bon, Bangkok",
-    "map-location": "1213213213123213213"
+    "location": "Sam Sean, Bangkok",
+    "map-location": { "lat": 13.7850081, "lng": 100.5339085 }
   }
 ]
