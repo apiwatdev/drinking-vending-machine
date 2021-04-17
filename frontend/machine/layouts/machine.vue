@@ -15,6 +15,8 @@ export default {
 <style lang="scss" scoped>
 .container {
   padding: 0.5rem;
+  width: 480px;
+  margin: 0 auto;
 }
 html {
   font-family: "Prompt", Arial, sans-serif;

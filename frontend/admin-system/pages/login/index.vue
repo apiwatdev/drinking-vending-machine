@@ -2,19 +2,22 @@
   <div class="container">
     <div class="content">
       <h1 class="logo"><span>O</span>Drink(admin)</h1>
+      <form @submit="signin($event)">
+        <div class="signin">
+          <p class="p_login">Login to you Account</p>
 
-      <div class="signin">
-        <p class="p_login">Login to you Account</p>
+          <div>
+            <input v-model="username" type="text" placeholder="username" />
+          </div>
+          <div>
+            <input v-model="password" type="password" placeholder="password" />
+          </div>
 
-        <div>
-          <input v-model="username" type="text" placeholder="username" />
+          <button type="submit" @click="signin($event)" class="signin-btn">
+            Sign in
+          </button>
         </div>
-        <div>
-          <input v-model="password" type="password" placeholder="password" />
-        </div>
-
-        <button @click="signin()" class="signin-btn">Sign in</button>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -29,18 +32,19 @@ export default {
   },
   layout: "login",
   methods: {
-    async signin() {
-     const payload = {
+    async signin(e) {
+      e.preventDefault();
+      const payload = {
         username: this.username,
         password: this.password
-      };  
+      };
       try {
-        await this.$auth.loginWith('local', {
+        await this.$auth.loginWith("local", {
           data: payload
         });
-        this.$router.push('/');
+        this.$router.push("/");
       } catch (e) {
-        this.$router.push('/login');
+        this.$router.push("/login");
       }
     }
   }

@@ -37,6 +37,7 @@ export const actions = {
     commit("setMachineId", machineId);
     return this.$axios.get("/api/machine-products/" + machineId).then(res => {
       commit("setProductList", res.data);
+      commit("setProduct", null);
     });
   },
   fetchProduct({ commit }, { machineId, productId }) {

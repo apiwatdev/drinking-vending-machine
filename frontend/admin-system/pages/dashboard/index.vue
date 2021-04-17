@@ -8,7 +8,7 @@
       />
     </div>
     <div class="machine-health">
-      <p class="title">Machines Health</p>
+      <p class="title">Machines</p>
       <div
         class="machine-card"
         v-for="machine of machines"
@@ -35,35 +35,16 @@ export default {
     return {
       barChartData: {
         labels: [
-          "2019-06",
-          "2019-07",
-          "2019-08",
-          "2019-09",
-          "2019-10",
-          "2019-11",
-          "2019-12",
-          "2020-01",
-          "2020-02",
-          "2020-03",
-          "2020-04",
-          "2020-05"
+          "Machine001",
+          "Machine002",
+          "Machine003",
         ],
         datasets: [
           {
-            label: "Visits",
-            data: [10, 15, 20, 30, 40, 50, 60, 70, 34, 45, 11, 78, 45],
-            backgroundColor: "#003f5c"
+            label: "salse",
+            data: [10,30,15],
+            backgroundColor: "#fd9f2c"
           },
-          {
-            label: "Pages Views",
-            data: [30, 24, 57, 23, 68, 72, 25, 64, 133, 143, 165, 33, 56],
-            backgroundColor: "#2f4b7c"
-          },
-          {
-            label: "Users",
-            data: [45, 65, 30, 53, 34, 35, 26, 37, 34, 45, 67, 87, 98],
-            backgroundColor: "#665191"
-          }
         ]
       },
       barChartOptions: {
@@ -73,7 +54,7 @@ export default {
         },
         title: {
           display: true,
-          text: "Google analytics data",
+          text: "Drink salse (Mock)",
           fontSize: 24,
           fontColor: "#6b7280"
         },

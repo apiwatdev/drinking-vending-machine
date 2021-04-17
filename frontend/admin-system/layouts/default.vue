@@ -7,14 +7,18 @@
 
 <script>
 import Header from "~/components/Navigate/Header.vue";
-export default ({
+export default {
   components: {
     Header
   }
-});
+};
 </script>
 
 <style lang="scss">
+.container {
+  width: 480px;
+  margin: 0 auto;
+}
 html {
   font-family: "Prompt", Arial, sans-serif;
   font-size: 16px;

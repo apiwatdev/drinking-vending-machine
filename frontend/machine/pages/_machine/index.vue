@@ -28,6 +28,7 @@ export default {
   async fetch() {
     const machineId = this.$route.params.machine;
     await this.$store.dispatch("fetchProductByMachine", { machineId });
+
   },
   computed: {
     products() {
