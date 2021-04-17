@@ -25,101 +25,18 @@
       </div>
       <div class="product">
         <div class="product-title">Products</div>
-        <input class="search" type="text" placeholder="search" />
-        <div class="product-card">
-          <div class="product-content">
-            <div class="product-image">
-              <div
-                class="drink-image"
-                :style="{ backgroundImage: `url(${image})` }"
-              ></div>
-            </div>
-            <div class="product-detail">
-              <div class="product-name">
-                Coca-Cola
-              </div>
-              <div class="product-description">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                mollitia excepturi ducimus voluptatibus expedita dolor officia
-                impedit dicta corrupti, neque enim ut voluptas, optio alias
-                pariatur inventore assumenda repellendus veniam!
-              </div>
-              <div class="price">price <span>10฿</span></div>
-
-              <div class="stock">stock <span>9</span></div>
-            </div>
-          </div>
-          <div class="action">
-            <button class="btn btn-add-item">add items</button>
-            <button class="btn btn-decrease-item">decrease</button>
-            <button class="btn btn-edit">edit</button>
-          </div>
-          <div class="alert warning">nearly out of item</div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-content">
-            <div class="product-image">
-              <div
-                class="drink-image"
-                :style="{ backgroundImage: `url(${image})` }"
-              ></div>
-            </div>
-            <div class="product-detail">
-              <div class="product-name">
-                Coca-Cola
-              </div>
-              <div class="product-description">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                mollitia excepturi ducimus voluptatibus expedita dolor officia
-                impedit dicta corrupti, neque enim ut voluptas, optio alias
-                pariatur inventore assumenda repellendus veniam!
-              </div>
-              <div class="price">price <span>10฿</span></div>
-
-              <div class="stock">stock <span>9</span></div>
-            </div>
-          </div>
-          <div class="action">
-            <button class="btn btn-add-item">add items</button>
-            <button class="btn btn-decrease-item">decrease</button>
-            <button class="btn btn-edit">edit</button>
-          </div>
-          <div class="alert warning">nearly out of item</div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-content">
-            <div class="product-image">
-              <div
-                class="drink-image"
-                :style="{ backgroundImage: `url(${image})` }"
-              ></div>
-            </div>
-            <div class="product-detail">
-              <div class="product-name">
-                Coca-Cola
-              </div>
-              <div class="product-description">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                mollitia excepturi ducimus voluptatibus expedita dolor officia
-                impedit dicta corrupti, neque enim ut voluptas, optio alias
-                pariatur inventore assumenda repellendus veniam!
-              </div>
-              <div class="price">price <span>10฿</span></div>
-
-              <div class="stock">stock <span>9</span></div>
-            </div>
-          </div>
-          <div class="action">
-            <button class="btn btn-add-item">add items</button>
-            <button class="btn btn-decrease-item">decrease</button>
-            <button class="btn btn-edit">edit</button>
-          </div>
-          <div class="alert warning">nearly out of item</div>
-        </div>
-
-        <div class="product-card">
+        <input
+          v-model="search"
+          class="search"
+          type="text"
+          placeholder="search"
+        />
+        <productCard
+          v-for="product of products"
+          :key="product.id"
+          :product="product"
+        />
+        <!-- <div class="product-card">
           <div class="product-content">
             <div class="product-image">
               <div
@@ -147,11 +64,11 @@
           <div class="action">
             <button class="btn btn-save">save</button>
           </div>
-        </div>
+        </div> -->
 
-        <div class="action">
+        <!-- <div class="action">
           <button class=" btn-add-product">add product</button>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -165,28 +82,39 @@
 </template>
 
 <script>
-import cokeImage from "~/assets/images/cocacola_PNG22.png";
+import productCard from "@/components/cards/productCard";
 export default {
-  components: {},
+  middleware: "auth",
+  components: {
+    productCard
+  },
   data() {
     return {
-      image: cokeImage,
-      markers: [{ lat: -25.344, lng: 131.036 }]
+      search: ""
     };
   },
   fetch() {
     const machineId = this.$route.params.machineId;
     this.$store.dispatch("fetchMachine", { machineId });
+    this.$store.dispatch("fetchProducts", { machineId });
   },
   computed: {
     machine() {
-      return this.$store.state.machine;
+      return this.$store.state.machine || {};
+    },
+    products() {
+      const products = this.$store.state.products || [];
+
+      return products.filter(product => {
+        return product.name.toLowerCase().includes(this.search.toLowerCase());
+      });
     }
   },
   mounted() {
-    if (!this.machine) {
+    if (!this.$store.state.machine) {
       const machineId = this.$route.params.machineId;
       this.$store.dispatch("fetchMachine", { machineId });
+      this.$store.dispatch("fetchProducts", { machineId });
     }
   },
   methods: {
@@ -229,50 +157,12 @@ export default {
     font-weight: 600;
     margin-bottom: 1rem;
   }
-  .machine-card {
-    cursor: pointer;
-    text-align: left;
-    background-color: #ecedf1;
-    display: block;
-    margin: 0.5rem 0;
-    padding: 1rem;
-    border-radius: 10px;
-    position: relative;
-    box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
-
-    .alert {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      border: 1px solid;
-      padding: 0.25rem;
-      border-radius: 5px;
-      font-size: 12px;
-    }
-
-    .alert.warning {
-      color: #fff;
-      border: none;
-      background-color: #fcae63;
-    }
-
-    .alert.health {
-      color: #fff;
-      border: none;
-      background-color: #70a4a1;
-    }
-
-    .alert.denger {
-      color: #fff;
-      border: none;
-      background-color: #fc6363;
-    }
-  }
 }
 
 .content {
   text-align: left;
   padding: 2rem;
+  width: 100%;
 
   .machine-location {
     margin: 0.75rem 0;
@@ -293,156 +183,6 @@ export default {
     margin-top: 1rem;
     .product-title {
       font-weight: 600;
-    }
-
-    .product-card {
-      padding: 1rem;
-      border-radius: 10px;
-      position: relative;
-      box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
-      margin: 1rem 0;
-      .product-content {
-        display: flex;
-        margin-top: 1rem;
-        .product-image {
-          display: block;
-          width: 100%;
-          min-width: 10rem;
-          max-width: 10rem;
-          padding: 0.5rem;
-          height: 10rem;
-          border-radius: 5%;
-          cursor: pointer;
-          background-image: linear-gradient(180deg, $primary-color, #fec987);
-          box-shadow: 2px 5px 12px 0 rgb(0 0 0 / 20%);
-          margin-right: 1rem;
-          .drink-image {
-            width: 100%;
-            height: 10rem;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 10rem;
-          }
-        }
-        .product-name {
-          font-size: 24px;
-        }
-
-        .product-description {
-          font-size: 12px;
-          color: #666565;
-        }
-
-        .price {
-          span {
-            font-weight: bold;
-            font-size: 20px;
-          }
-        }
-
-        .stock {
-          span {
-            font-weight: bold;
-            font-size: 20px;
-          }
-        }
-      }
-
-      .action {
-        text-align: center;
-
-        .btn {
-          border: none;
-          outline: none;
-          cursor: pointer;
-          padding: 0.5rem;
-          border-radius: 5px;
-        }
-
-        .btn-add-item {
-          background-color: #70a4a1;
-          color: #fff;
-        }
-
-        .btn-decrease-item {
-          color: #fff;
-          background-color: #8871fc;
-        }
-
-        .btn-edit {
-          color: #fff;
-          background-color: #707070;
-        }
-
-        .btn-save {
-          color: #fff;
-          background-color: #70a4a1;
-        }
-      }
-
-      .alert {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        border: 1px solid;
-        padding: 0.25rem;
-        border-radius: 5px;
-        font-size: 12px;
-      }
-
-      .alert.warning {
-        color: #fff;
-        border: none;
-        background-color: #fcae63;
-      }
-
-      .alert.health {
-        color: #fff;
-        border: none;
-        background-color: #70a4a1;
-      }
-
-      .alert.denger {
-        color: #fff;
-        border: none;
-        background-color: #fc6363;
-      }
-
-      input {
-        padding: 0.5rem;
-        border: 1px solid #ecedf1;
-        margin: 0.25rem 0;
-        border-radius: 5px;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        outline: none;
-
-        width: 100%;
-
-        ::placeholder {
-          color: #c7c7c7;
-        }
-      }
-
-      .price {
-        display: flex;
-        label {
-          font-size: 15px;
-          padding-top: 0.5rem;
-          margin-right: 1rem;
-        }
-      }
-
-      .stock {
-        display: flex;
-        label {
-          font-size: 15px;
-
-          padding-top: 0.5rem;
-          margin-right: 1rem;
-        }
-      }
     }
 
     .btn-add-product {

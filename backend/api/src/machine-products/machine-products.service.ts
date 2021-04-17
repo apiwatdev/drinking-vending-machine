@@ -4,9 +4,13 @@ import { UpdateMachineProductDto } from './dto/update-machine-product.dto';
 import { MachineProductsData } from '../../../data/data.js';
 import { v4 as uuidv4 } from 'uuid';
 import { MailerService } from '@nestjs-modules/mailer';
+import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class MachineProductsService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(
+    private readonly mailerService: MailerService,
+    private usersService: UsersService,
+  ) {}
   machineProductList = MachineProductsData;
   create(createMachineProductDto: CreateMachineProductDto) {
     return 'This action adds a new machineProduct';
@@ -32,7 +36,9 @@ export class MachineProductsService {
     const machineProducts = this.machineProductList.find((v) => {
       return v.machineId == id;
     });
-
+    if (!machineProducts) {
+      return [];
+    }
     return machineProducts.products || [];
   }
 
@@ -61,12 +67,15 @@ export class MachineProductsService {
       case 'add':
         product.stock = product.stock + body.num;
       case 'decrease':
-        if (
-          this.checkNearlyOutOfItem(product.stock, product.stock - body.num)
-        ) {
+        const sendNoti = this.checkNearlyOutOfItem(
+          product.stock,
+          product.stock - body.num,
+        );
+
+        product.stock = product.stock - body.num;
+        if (sendNoti) {
           this.sendNotiToNearlyOutOfItem(machineId, product);
         }
-        product.stock = product.stock - body.num;
     }
     return product;
   }
@@ -98,10 +107,11 @@ export class MachineProductsService {
   }
 
   sendNotiToNearlyOutOfItem(machineId, product) {
+    const user = this.usersService.defaultUser();
     this.mailerService
       .sendMail({
         from: 'NotReply@drinkingVendingMachine.com', // sender
-        to: 'it.apiwat.dev@gmail.com', // list of receivers
+        to: user.email, // list of receivers
         subject: 'Machine Alert : Nearly Out Of Items', // Mail subject
         html: `<b>Machine: ${machineId}</b><br>drink: ${product.name}<br>stock: ${product.stock}`, // HTML body
       })

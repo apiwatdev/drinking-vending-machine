@@ -52,7 +52,7 @@
         "name": "Coca-Cola",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
         "price": 15,
-        "stock": 11,
+        "stock": 30,
         "image": "http://localhost:3001/files/cocacola-01.png"
       },
       {
@@ -60,7 +60,7 @@
         "name": "Coca-Cola",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
         "price": 15,
-        "stock": 11,
+        "stock": 30,
         "image": "http://localhost:3001/files/cocacola-02.png"
       },
       {
@@ -68,7 +68,7 @@
         "name": "Sprite",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
         "price": 15,
-        "stock": 11,
+        "stock": 30,
         "image": "http://localhost:3001/files/sprite-01.png"
       },
       {
@@ -76,7 +76,7 @@
         "name": "Pepsi",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
         "price": 20,
-        "stock": 11,
+        "stock": 30,
         "image": "http://localhost:3001/files/pepsi-01.png"
       },
       {
@@ -84,7 +84,7 @@
         "name": "AYATAKA",
         "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
         "price": 20,
-        "stock": 11,
+        "stock": 30,
         "image": "http://localhost:3001/files/ayataka-01.png"
       }
     ]

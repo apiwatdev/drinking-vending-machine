@@ -27,6 +27,7 @@
 <script>
 import BarChart from "~/components/chart/BarChart.js";
 export default {
+  middleware: "auth",
   components: {
     "bar-chart": BarChart
   },
@@ -117,7 +118,7 @@ export default {
   },
   methods: {
     goToMachineDetail(machineId) {
-      this.$router.push("/machines/"+machineId);
+      this.$router.push("/machines/" + machineId);
     }
   }
 };

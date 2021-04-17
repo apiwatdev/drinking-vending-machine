@@ -16,14 +16,26 @@
       </div>
       <ul>
         <li>
-          <NuxtLink  @click.native="toggleMenu()" to="/dashboard"
+          <NuxtLink @click.native="toggleMenu()" to="/dashboard"
             >Dashboard</NuxtLink
           >
         </li>
         <li>
-          <NuxtLink  @click.native="toggleMenu()" to="/machines">Machines</NuxtLink>
+          <NuxtLink @click.native="toggleMenu()" to="/machines"
+            >Machines</NuxtLink
+          >
         </li>
-        <li><a href="#" @click="toggleMenu()"> Log out</a></li>
+        <li>
+          <a
+            href="#"
+            @click="
+              toggleMenu();
+              logout();
+            "
+          >
+            Log out</a
+          >
+        </li>
       </ul>
       <div class="hamburger-menu">
         <img src="~assets/icons/list-nested.svg" alt="" />
@@ -45,6 +57,9 @@ export default {
     },
     gotoDashboard(){
         this.$router.push('/dashboard')
+    },
+    async logout(){
+      await this.$auth.logout()
     }
   }
 };

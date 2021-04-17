@@ -34,7 +34,12 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/style-resources", "@nuxtjs/axios", "@nuxtjs/dotenv"],
+  modules: [
+    "@nuxtjs/style-resources",
+    "@nuxtjs/axios",
+    "@nuxtjs/dotenv",
+    "@nuxtjs/auth-next"
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -67,5 +72,32 @@ export default {
 
   proxy: {
     "/api/": { target: "http://localhost:3001", pathRewrite: { "^/api/": "" } }
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: "access_token"
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: "username"
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: "/api/auth/login", method: "post" },
+          logout: false,
+          user: { url: "/api/auth/profile", method: "get" }
+        }
+      }
+    },
+    redirect: {
+      login: "/login",
+      logout: "/",
+      callback: "/login",
+      home: "/"
+    }
   }
 };

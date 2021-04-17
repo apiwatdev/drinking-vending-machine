@@ -7,10 +7,10 @@
         <p class="p_login">Login to you Account</p>
 
         <div>
-          <input type="text" placeholder="username" />
+          <input v-model="username" type="text" placeholder="username" />
         </div>
         <div>
-          <input type="password" placeholder="password" />
+          <input v-model="password" type="password" placeholder="password" />
         </div>
 
         <button @click="signin()" class="signin-btn">Sign in</button>
@@ -21,10 +21,27 @@
 
 <script>
 export default {
-  layout: 'login',
-  methods:{
-    signin() {
-      this.$router.push('/')
+  data() {
+    return {
+      username: "",
+      password: ""
+    };
+  },
+  layout: "login",
+  methods: {
+    async signin() {
+     const payload = {
+        username: this.username,
+        password: this.password
+      };  
+      try {
+        await this.$auth.loginWith('local', {
+          data: payload
+        });
+        this.$router.push('/');
+      } catch (e) {
+        this.$router.push('/login');
+      }
     }
   }
 };
@@ -46,7 +63,7 @@ export default {
       padding: 0.25rem;
 
       .p_login {
-        margin: .5rem 0;
+        margin: 0.5rem 0;
       }
     }
 
@@ -59,12 +76,12 @@ export default {
       margin: 0.5rem 0;
       border-radius: 10px;
       text-decoration: none;
-       outline: none;
+      outline: none;
     }
 
     .signin-btn {
       width: 100%;
-       outline: none;
+      outline: none;
       cursor: pointer;
       color: #fff;
       border: none;

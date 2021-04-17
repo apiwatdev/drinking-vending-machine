@@ -1,7 +1,7 @@
 export const state = () => ({
   machineList: [],
   machine: null,
-  products: null
+  products: null,
 });
 
 export const mutations = {
@@ -10,6 +10,9 @@ export const mutations = {
   },
   setMachine(state, payload) {
     state.machine = payload;
+  },
+  setProductList(state, payload) {
+    state.products = payload;
   }
 };
 
@@ -22,6 +25,11 @@ export const actions = {
   fetchMachine({ commit }, { machineId }) {
     return this.$axios.get("/api/machines/" + machineId).then(res => {
       commit("setMachine", res.data);
+    });
+  },
+  fetchProducts({ commit }, { machineId }) {
+    return this.$axios.get("/api/machine-products/" + machineId).then(res => {
+      commit("setProductList", res.data);
     });
   }
 };

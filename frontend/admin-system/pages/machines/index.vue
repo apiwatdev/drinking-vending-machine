@@ -25,6 +25,7 @@
 <script>
 import BarChart from "~/components/chart/BarChart.js";
 export default {
+  middleware: "auth",
   components: {
     "bar-chart": BarChart
   },

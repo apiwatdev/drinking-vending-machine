@@ -1,12 +1,11 @@
 <template>
-  <div class="container">
-    
-  </div>
+  <div class="container"></div>
 </template>
 
 <script>
 import BarChart from "~/components/chart/BarChart.js";
 export default {
+  middleware: "auth",
   components: {
     "bar-chart": BarChart
   },
@@ -81,12 +80,12 @@ export default {
       }
     };
   },
-  created(){
- this.$router.push('/dashboard')
+  created() {
+    this.$router.push("/dashboard");
   },
   methods: {
-    goToMachineDetail(){
-      this.$router.push('/machines/aaaa')
+    goToMachineDetail() {
+      this.$router.push("/machines/aaaa");
     }
   }
 };
