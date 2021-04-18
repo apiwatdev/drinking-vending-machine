@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev" : "concurrently --kill-others \"cd .\\backend\\api & npm run start:dev\" \"cd .\\frontend\\admin-system & npm run dev\" \"cd .\\frontend\\machine & npm run dev\"" ,
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
-    "@types/passport-jwt": "^3.0.5"
+    "@types/passport-jwt": "^3.0.5",
+    "concurrently": "^6.0.2"
   }
 }
