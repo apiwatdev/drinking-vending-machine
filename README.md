@@ -31,5 +31,43 @@
 
 ## Set Up
 #### Set up key
+Set up SMTP Gmail at  backend/api/.env
+
+[Enabled less secured app ](https://myaccount.google.com/lesssecureapps")
+```
+SMTP_GMAIL_USER=
+SMTP_GMAIL_PASS=
+```
+Set up user at backend/data/users.json
+```
+[
+  {
+    "username": "admin",
+    "password": "admin+1234",
+    "email": "YOUR_EMAIL_NOTI" // email for recive noti alert after product is less 10
+  }
+]
+
+```
+Set up google map key at /frontend/admin-system/.env
+```
+GMAP_KEY=GOOGLE_MAP_API_KEY
+```
 #### Install 
+ ```javascript 
+npm install 
+npm install  --prefix ./backend/api
+npm install  --prefix ./frontend/admin-system 
+npm install  --prefix ./frontend/machine
+```
 ## Start Project
+back to main project
+ ```javascript 
+npm run dev
+```
+goto website
+> admin system : http://localhost:3000/
+> 
+> machine :http://localhost:8000/
+
+ 
